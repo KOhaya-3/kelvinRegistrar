@@ -10,6 +10,7 @@ cx_Freeze==7.2.5
 cx_Logging==3.2.1
 cycler==0.12.1
 fonttools==4.54.1
+gunicorn==23.0.0
 hashID==3.1.4
 kiwisolver==1.4.7
 lief==0.15.1
