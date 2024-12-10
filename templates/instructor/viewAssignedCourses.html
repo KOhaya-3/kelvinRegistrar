@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>View All Assigned Courses</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        table {
+            width: 25%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        thead th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ddd;
+            
+        }
+
+        tbody td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        table {
+            border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+        %if assignedCourseDict:
+            <h4>Here's some info on the courses you're assigned to:</h4>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Number</th>
+                </tr>
+            
+            %for assignedCourse in assignedCourseDict:
+                <tr>
+                    <th>{{assignedCourse["Title"]}}</th>
+                    <th>{{assignedCourse["Number"]}}</th>
+                </tr>
+            %end
+            </table>
+        %else:
+            <p>*Instructor isn't assigned to any courses*</p>
+        %end
+        <a href="/instructor">Back to dashboard</a>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        %if coursesExist and enrollmentDict:
+            <h4>Here are all the classes available:</h4>
+            <form action="enrollInACourseProcessor" method="post">
+                %for course in enrollmentDict:
+                    <input type="checkbox" name="enrollmentList[]" id="" value="{{course['Number']}}">{{course["Title"]}} {{course["Number"]}} (Teacher: {{course["Instructor First Name"]}} {{course["Instructor Last Name"]}})<br>
+                %end
+                <br>
+                <button type="submit">Enroll</button>
+            </form>  
+        %else:
+            <p>*If you are seeing this page, you have either enrolled in all available courses, or there are no courses to enroll in*</p>
+        %end
+        <a href="/student">Back to dashboard</a>
+    </body>
+</html>

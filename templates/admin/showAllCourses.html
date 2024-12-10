@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Show All Courses</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        table {
+            width: 25%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        thead th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ddd;
+            
+        }
+
+        tbody td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        table {
+            border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+        %if coursesExist:
+            <h4>Here some info on all the existing courses:</h4>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Number</th>
+                    <th>Instructor's Username</th>
+                </tr>
+            
+            %for course in course_dict:
+                <tr>
+                    <th>{{course["Title"]}}</th>
+                    <th>{{course["Number"]}}</th>
+                    <th>{{course["Instructor"]}}</th>
+                </tr>
+            %end
+            </table>
+        %else:
+            <p>*No courses yet*</p>
+        %end
+        <a href="/admin">Back to dashboard</a>
+    </body>
+</html>

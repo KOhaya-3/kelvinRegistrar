@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add an Instructor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .form-error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <form action="addInstructorValidation" method="post">
+        <div>
+            <label for="firstName">Instructor's First Name:</label>
+            <input id="firstName" type="text" name="firstName" required>
+            % if invalidFirstName == "True":
+                <div class="form-error">First name can't have spaces and can only contain letters.</div>
+            % end
+        </div>
+
+        <div>
+            <label for="lastName">Instructor's Last Name:</label>
+            <input id="lastName" type="text" name="lastName" required>
+            % if invalidLastName == "True":
+                <div class="form-error">Last name can't have spaces and can only contain letters.</div>
+            % end
+        </div>
+
+        <div>
+            <label for="username">Instructor's Username:</label>
+            <input id="username" type="text" name="username" required>
+            % if invalidUsername == "True":
+            <div class="form-error">Username already exists.</div>
+            % end
+        </div>
+
+        <div>
+            <label for="password">Instructor's Password:</label>
+            <input id="password" type="password" name="password" required>
+        </div>
+        <label for="position">Is the instructor a:</label>
+        <select name="position" required>
+            <option value="">-- Choose instructor's position --</option>
+            <option value="professor">Professor</option>
+            <option value="assistant">Assistant</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Add Instructor">
+    </form>
+    <a href="/admin">Back to dashboard</a>
+</body>
+</html>

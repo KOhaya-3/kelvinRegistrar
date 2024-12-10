@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Student Dashboard</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            a{
+                color: #000;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome Back {{firstName}}!</h1>
+        <button><a href="/student/viewEnrolledCourses">View all enrolled courses</a></button><br>
+        <button><a href="/student/enrollInACourse">Enroll in a course</a></button>
+        <form action="returnHome" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </body>
+</html>

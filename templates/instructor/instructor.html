@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            a{
+                color: #000;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome Back {{position[0].upper()}}{{position[1:]}} {{firstName}}!</h1>
+        <button><a href="/instructor/viewAssignedCourses">View all Assigned Courses</a></button><br>
+        <form action="returnHome" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </body>
+</html>
