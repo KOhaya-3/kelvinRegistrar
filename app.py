@@ -11,7 +11,7 @@ app = Bottle()
 
 
 # Create a BeakerMiddleware instance  
-app = createSessionMiddleware(app) 
+sessionMiddleware = createSessionMiddleware(app) 
 
 
   
