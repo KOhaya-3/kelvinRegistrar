@@ -211,8 +211,8 @@ def courseValidation():
         instructorData = pd.read_csv("data/instructorData.csv")
         instructorUsername = request.forms.get("instructorUsername")
         matchingInstructorInfo = instructorData[instructorData["Username"] == instructorUsername]
-        instructorFirstName = matchingInstructorInfo["First Name"].values
-        instructorLastName = matchingInstructorInfo["Last Name"].values
+        instructorFirstName = matchingInstructorInfo["First Name"].values[0]
+        instructorLastName = matchingInstructorInfo["Last Name"].values[0]
     else:
       instructorUsername = ""
       instructorFirstName = ""
@@ -236,8 +236,8 @@ def courseValidation():
             "Title": [title],
             "Number": [number],
             "Instructor": [instructorUsername],
-            "Instructor First Name": [instructorFirstName[0]],
-            "Instructor Last Name": [instructorLastName[0]],
+            "Instructor First Name": [instructorFirstName],
+            "Instructor Last Name": [instructorLastName],
             "Student Usernames": [""],
             "Student First Names": [""], 
             "Student Last Names": [""]
