@@ -26,17 +26,21 @@ def instructor():
 
 #--------View Assigned Courses Route--------
 @instructorApp.route("/viewAssignedCourses")
-def viewAssignedCourses():
-    courseData = pd.read_csv("data/courseData.csv")
-    session = request.environ.get("beaker.session")
-    username = session.get("username")
+def viewAssignedCourses():   
+  session = request.environ.get("beaker.session")
+  username = session.get("username")
 
+  if os.path.exists("data/courseData.csv"):
+    courseData = pd.read_csv("data/courseData.csv")
     hasCourses = courseData["Instructor"].isin([username]).any()
 
-    if hasCourses:
-      assignedCourseDict = courseData[courseData["Instructor"] == username]
-      assignedCourseDict = assignedCourseDict.to_dict("records")
-    else:
-      assignedCourseDict = []
+  else:
+    hasCourses = False
 
-    return template("templates/instructor/viewAssignedCourses", assignedCourseDict=assignedCourseDict, hasCourses=hasCourses, username=username)
+  if hasCourses:
+    assignedCourseDict = courseData[courseData["Instructor"] == username]
+    assignedCourseDict = assignedCourseDict.to_dict("records")
+  else:
+    assignedCourseDict = []
+
+  return template("templates/instructor/viewAssignedCourses", assignedCourseDict=assignedCourseDict, hasCourses=hasCourses, username=username)
