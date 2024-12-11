@@ -8,6 +8,7 @@ studentApp = Bottle()
 
 #---------Student Dashboard Route--------
 @studentApp.route("/")
+@requiresLogin
 def student():
     session = request.environ.get("beaker.session")
     firstName = session.get("firstName")
@@ -21,6 +22,7 @@ def student():
 
 #--------View erolled courses route--------
 @studentApp.route("/viewEnrolledCourses")
+@requiresLogin
 def viewEnrolledCourses():
     session = request.environ.get("beaker.session")
     username = session.get("username")
@@ -51,6 +53,7 @@ def viewEnrolledCourses():
 
 #--------Enroll In A Course Route and Post--------
 @studentApp.route("/enrollInACourse")
+@requiresLogin
 def enrollInACourse():
     coursesExist = os.path.exists("data/enrollment.csv")
     session = request.environ.get("beaker.session")

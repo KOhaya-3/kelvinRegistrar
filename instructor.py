@@ -26,6 +26,7 @@ def instructor():
 
 #--------View Assigned Courses Route--------
 @instructorApp.route("/viewAssignedCourses")
+@requiresLogin
 def viewAssignedCourses():   
   session = request.environ.get("beaker.session")
   username = session.get("username")

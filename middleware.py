@@ -13,7 +13,7 @@ def requiresLogin(func):
    def wrapper(*args, **kwargs):  
       session = request.environ.get('beaker.session')  
       if 'authenticated' not in session or not session:  
-        return redirect('/adminLogin')  
+        return redirect('/')  
       return func(*args, **kwargs)  
    return wrapper
 

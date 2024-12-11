@@ -47,6 +47,7 @@ def admin():
 
 #--------Adding and validating students--------
 @adminApp.route("/addStudent")
+@requiresLogin
 def addStudent():
   invalidFirstName = request.query.get("invalidFirstName", False)
   invalidLastName = request.query.get("invalidLastName", False)  
@@ -105,6 +106,7 @@ def validateStudent():
 
 #--------Adding and validationg instructors--------
 @adminApp.route("/addInstructor")
+@requiresLogin
 def addInstructor():
     firstNameValidation = request.query.get("invalidFirstName", " ")
     lastNameValidation = request.query.get("invalidLastName", " ")
@@ -167,6 +169,7 @@ def instructorValidation():
 
 #--------Adding and validating courses--------
 @adminApp.route("/addCourse")
+@requiresLogin
 def addCourse():
     if os.path.exists("data/instructorData.csv"):
         instructorUsernamesExist = True
@@ -265,6 +268,7 @@ def courseValidation():
 
 #--------Show All Courses Route--------    
 @adminApp.route("/showAllCourses")
+@requiresLogin
 def showAllCourses():
   if os.path.exists("data/courseData.csv"):
     coursesExist = True
@@ -284,6 +288,7 @@ def showAllCourses():
 
 #--------Show All Instructors Route--------
 @adminApp.route("/showAllInstructors")
+@requiresLogin
 def showAllInstructors():
   if os.path.exists("data/instructorData.csv"):
     instructorsExist = True
@@ -302,6 +307,7 @@ def showAllInstructors():
 
 #--------Show All Students Route--------
 @adminApp.route("/showAllStudents")
+@requiresLogin
 def showAllStudents():
   if os.path.exists("data/studentData.csv"):
     studentsExist = True
