@@ -272,7 +272,8 @@ def courseValidation():
 def showAllCourses():
   if os.path.exists("data/courseData.csv"):
     coursesExist = True
-    course_dict = pd.read_csv("data/courseData.csv").to_dict("records")
+    course_dict = pd.read_csv("data/courseData.csv").fillna("No Instructor").to_dict("records")
+    
   else:
     coursesExist = False
     course_dict = []
