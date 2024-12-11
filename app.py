@@ -11,7 +11,7 @@ app = Bottle()
 
 
 # Create a BeakerMiddleware instance  
-middleWare_app = createSessionMiddleware(app) 
+app = createSessionMiddleware(app) 
 
 
   
@@ -19,10 +19,12 @@ middleWare_app = createSessionMiddleware(app)
 @app.route('/')  
 def index():  
    session = request.environ.get("beaker.session")
-   if 'authenticated' in session:  
-      session.delete()  
-      session.save()  
-   return template("templates/index")  
+    
+   if session and 'authenticated' in session:
+        session.clear()  # Clear the session data
+        session.save()   # Save the cleared session
+    
+   return template("templates/index")
 
 
 

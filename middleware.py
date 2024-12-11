@@ -11,8 +11,8 @@ sessionOpts = {
 
 def requiresLogin(func):  
    def wrapper(*args, **kwargs):  
-      session = request.environ['beaker.session']  
-      if 'authenticated' not in session or not session['authenticated']:  
+      session = request.environ.get('beaker.session')  
+      if 'authenticated' not in session or not session:  
         return redirect('/adminLogin')  
       return func(*args, **kwargs)  
    return wrapper
