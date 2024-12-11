@@ -18,7 +18,7 @@ middleWare_app = createSessionMiddleware(app)
 #--------Home Page Route-------- 
 @app.route('/')  
 def index():  
-   session = request.environ["beaker.session"]
+   session = request.environ.get("beaker.session")
    if 'authenticated' in session:  
       session.delete()  
       session.save()  
