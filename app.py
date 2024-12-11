@@ -194,9 +194,7 @@ app.mount("/admin",adminApp)
 app.mount("/instructor", instructorApp)
 app.mount("/student", studentApp)
 
-# Run the app  
-port = int(os.getenv('PORT', 4000))
+
 
 # Run the Bottle server
-if __name__ == "__main__":
-    run(app, host='0.0.0.0', port=port)
+application = app
