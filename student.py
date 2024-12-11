@@ -6,10 +6,6 @@ import os
 #start the studentApp
 studentApp = Bottle()  
 
-#import the universal cookies
-sessionMiddleware = createSessionMiddleware(studentApp)
-
-
 #---------Student Dashboard Route--------
 @studentApp.route("/")
 def student():

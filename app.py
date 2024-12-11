@@ -11,7 +11,7 @@ app = Bottle()
 
 
 # Create a BeakerMiddleware instance  
-sessionMiddleware = createSessionMiddleware(app) 
+middlewareApp = createSessionMiddleware(app) 
 
 
   
@@ -199,4 +199,4 @@ app.mount("/student", studentApp)
 
 
 # Run the Bottle server
-application = app
+application = middlewareApp

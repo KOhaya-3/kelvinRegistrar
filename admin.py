@@ -8,9 +8,6 @@ import os
 #start the adminApp
 adminApp = Bottle()  
 
-#import the universal cookies
-sessionMiddleware = createSessionMiddleware(adminApp)
-
 
 
 

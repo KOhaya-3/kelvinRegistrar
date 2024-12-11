@@ -7,8 +7,6 @@ import os
 #start the adminApp
 instructorApp = Bottle()  
 
-#import the universal cookies
-sessionMiddleware = createSessionMiddleware(instructorApp)
 
 #--------Instructor Dashboard--------
 @instructorApp.route('/')  
