@@ -200,3 +200,6 @@ app.mount("/student", studentApp)
 
 # Run the Bottle server
 application = middlewareApp
+
+if __name__ == "__main__":
+   run(middlewareApp, host='localhost', port=8080, reloader=True)
