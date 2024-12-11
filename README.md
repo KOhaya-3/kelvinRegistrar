@@ -10,12 +10,12 @@ Website:
     Go to the url https://kelvinregistrar.onrender.com/adminLogin
 
 Locally:
-    Un comment (if __name__ == "__main__") at the bottom of app.py and all the indented statements that go with it, then run app.py.
-    the wehsite should apear in localhost:8080
+    Un comment (if + __name__ == "__main__") at the bottom of app.py and all the indented statements that go with it, then run app.py. The wehsite should apear in localhost:8080
 
 
 File Structure:
 
+```Python
 ├── Procfile.txt
 ├── README.md
 ├── __pycache__
@@ -58,3 +58,4 @@ File Structure:
         ├── student.html
         ├── studentLogin.html
         └── viewEnrolledCourses.html
+```
