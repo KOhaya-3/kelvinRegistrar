@@ -24,19 +24,21 @@ def student():
 def viewEnrolledCourses():
     session = request.environ.get("beaker.session")
     username = session.get("username")
+    hasCourses = None
+    enrolledCourseDict = []
 
-    enrollmentData = pd.read_csv("data/enrollment.csv", dtype=str)
-    enrollmentData = enrollmentData.fillna("")
+    if os.path.exists("data/enrollment.csv"):
+        enrollmentData = pd.read_csv("data/enrollment.csv", dtype=str)
+        enrollmentData = enrollmentData.fillna("")
 
+        filteredCourses = enrollmentData[enrollmentData["Student Usernames"].str.contains(rf"\b{username}\b")]
+        hasCourses = len(filteredCourses) > 0
 
-    filteredCourses = enrollmentData[enrollmentData["Student Usernames"].str.contains(rf"\b{username}\b")]
+        if hasCourses:
+            enrolledCourseDict = filteredCourses.to_dict("records")
 
-    hasCourses = len(filteredCourses) > 0
-
-    if hasCourses:
-        enrolledCourseDict = filteredCourses.to_dict("records")
     else:
-        enrolledCourseDict = []
+        hasCourses = False
     
 
     return template("templates/student/viewEnrolledCourses", hasCourses=hasCourses, enrolledCourseDict=enrolledCourseDict)
