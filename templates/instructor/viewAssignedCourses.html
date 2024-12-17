@@ -6,7 +6,7 @@
     </head>
     <body>
         <div class="container">
-            %if assignedCourseDict:
+            %if assignedCourseDict != {}:
             <h4>Assigned Courses</h4>
             <table>
                 <tr>
@@ -20,10 +20,15 @@
                 </tr>
                 %end
             </table>
-            %else:
-                <p>*Instructor isn't assigned to any courses*</p>
-            %end
             <div class="button-container"><div><a href="/instructor">Back to dashboard</a></div></div>
+            %else:
+                <div class="no-content">
+                    <p>*Instructor isn't assigned to any courses*</p>
+                    <img src="/static/images/unemployed.png" alt="Unemployed Bloke">
+                    <div class="button-container"><div><a href="/instructor">Back to dashboard</a></div></div>
+                </div>
+            %end
+            
         </div>
     </body>
 </html>

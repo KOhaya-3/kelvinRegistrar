@@ -1,6 +1,9 @@
 /* Global Styles */
 @import url("global.css");
 
+
+
+
 .container {
     position: absolute;
     top: 50%;
@@ -13,6 +16,8 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
+    color: var(--font-color);
+
 }
 
 

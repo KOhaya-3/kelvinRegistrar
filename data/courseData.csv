@@ -1,8 +1,10 @@
 Title,CourseID,InstructorID,AssistantID,StudentIDs
-Linear Algebra,432,4,,10
-Topology,234,4,,10
-Geometry,232,4,,10
-Sigma,433,4,,10
-Art,834,4,5,10
-3d Models,444,4,5,10
-2d Blueprints,333,4,,10
+Linear Algebra,432,4,,12;10;13
+Topology,234,4,,
+Geometry,232,4,,10;12
+Sigma,433,4,,10;12
+Art,834,4,5,12
+3d Models,444,4,5,
+2d Blueprints,333,4,,
+Shot leading,300,6,7,
+Bear Lessons,101,11,5,

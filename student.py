@@ -35,7 +35,6 @@ def viewEnrolledCourses():
     else:
         filteredCourses = {}
     
-    print(filteredCourses)
 
     return template("templates/student/viewEnrolledCourses", enrolledCourseDict=filteredCourses,time=int(time()))
 
@@ -74,25 +73,17 @@ def processCourseEnrollment():
     courseData = pd.read_csv("data/courseData.csv", dtype=str).fillna("")
     desiredCourses = {}
     session = request.environ.get("beaker.session")
-    iD = str(session.get("ID"))
+    iD = session.get("ID")
     selectedCourseIDs = request.forms.getlist("enrollmentList[]")
 
     for courseID in selectedCourseIDs:
         desiredCourses = courseData.loc[courseData["CourseID"] == str(courseID), "StudentIDs"].values[0]
-        # print(desiredCourses)
-        listOfEnrolledStudents = desiredCourses.split(';')
-        listOfEnrolledStudents.append(iD)  
-        enrolledStudentStr = ";".join(listOfEnrolledStudents[1:])
+        listOfEnrolledStudents = desiredCourses.split(';') if desiredCourses != "" else list(desiredCourses)
+        listOfEnrolledStudents.append(str(iD))  
+        enrolledStudentStr = (";".join(listOfEnrolledStudents))
+        print (enrolledStudentStr)
         courseData.loc[courseData["CourseID"] == courseID, "StudentIDs"] = enrolledStudentStr
-        print(enrolledStudentStr)
     courseData.to_csv("data/courseData.csv", index=False)
-    
-        
-    """
-        find the course where the instructor ID matches the instuctorID from the form
-        
-        take that row and split up its studentID list, add the new studentID, and join the list back up
-        """
 
     return redirect("/student/enrollInACourse?success=True")
 

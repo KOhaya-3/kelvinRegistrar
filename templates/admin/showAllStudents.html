@@ -5,8 +5,8 @@
         <link rel="stylesheet" href="/static/showThings.css?v={{time}}">
     </head>
     <body>
+        %if studentDict != {}:
         <div class="container">
-            %if studentsExist:
             <h1>All Students</h1>
             <table>
                 <tr>
@@ -27,15 +27,15 @@
                 </tr>
             %end
             </table>
-            
             <div class="button-container"><div><a href="/admin">Back to dashboard</a></div></div>
-            %else:
-            <div class="no-content">
-                <h3>There are no students currently</h3>
-                <img src="/static/images/noStudents.png" alt="Empty Classroom">
-                <div class="button-container"><div><a href="/admin">Back to dashboard</a></div></div>
-            </div>
-            %end
         </div>      
+        
+        %else:
+        <div class="no-content">
+            <h3>There are no students currently (the school's that bad huh?)</h3>
+            <img src="/static/images/noStudents.png" alt="Empty Classroom">
+            <div class="button-container"><div><a href="/admin">Back to dashboard</a></div></div>
+        </div>
+        %end
     </body>
 </html>

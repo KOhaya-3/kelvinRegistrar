@@ -200,8 +200,6 @@ def addCourse():
       mergedInstructorDict = pd.merge(userData,instructorData, on="ID")
       mergedProfessorDict = mergedInstructorDict[mergedInstructorDict["Position"] == "professor"].to_dict("records")
       mergedAssistantDict = mergedInstructorDict[mergedInstructorDict["Position"] == "assistant"].to_dict("records")
-      print(mergedProfessorDict)
-      print(mergedAssistantDict)
       
   else:
       instructorsExist = False
@@ -230,7 +228,7 @@ def courseValidation():
   if os.path.exists("data/courseData.csv"):
       courseData = pd.read_csv("data/courseData.csv", dtype=str)
   else:
-      courseData = pd.DataFrame(columns=["Title", "CourseID", "InstructorID", "AssistantID", "StudentID"])
+      courseData = pd.DataFrame(columns=["Title", "CourseID", "InstructorID", "AssistantID", "StudentIDs"])
 
 
   #get the course's title, id, and instructor ID from the template
@@ -256,7 +254,7 @@ def courseValidation():
   "CourseID": [courseID],
   "InstructorID": [instructorID],
   "AssistantID" : [assistantID],
-  "StudentID": [""]
+  "StudentIDs": [""]
   })
 
   courseData = pd.concat([courseData, newCourse])
@@ -329,14 +327,11 @@ def showAllInstructors():
 @adminApp.route("/showAllStudents")
 @requiresLogin
 def showAllStudents():
-  if os.path.exists("data/studentData.csv"):
-    studentsExist = True
+  if os.path.exists("data/userData.csv"):
     userData = pd.read_csv("data/userData.csv")
-    studentData = pd.read_csv("data/studentData.csv")
-    studentDict = pd.merge(userData, studentData, on="ID").to_dict("records")
+    studentData = userData[userData["Role"] == "student"].to_dict("records")
   else:
-    studentsExist = False
-    studentDict = []
+    studentData = {}
   
-  return template("templates/admin/showAllStudents", studentsExist=studentsExist, studentDict=studentDict, time=int(time()))
+  return template("templates/admin/showAllStudents", studentDict=studentData, time=int(time()))
   

@@ -34,15 +34,11 @@ def viewAssignedCourses():
 
   if os.path.exists("data/courseData.csv"):
     courseData = pd.read_csv("data/courseData.csv")
-    hasCourses = courseData["InstructorID"].isin([iD]).any()
+    assignedCourseDict = courseData.loc[(courseData["InstructorID"] == iD) | (courseData["AssistantID"] == iD)].to_dict("records")
 
   else:
-    hasCourses = False
+    assignedCourseDict = {}
     
 
-  if hasCourses:
-    assignedCourseDict = courseData[courseData["InstructorID"] == iD].to_dict("records")
-  else:
-    assignedCourseDict = []
 
   return template("templates/instructor/viewAssignedCourses", assignedCourseDict=assignedCourseDict, time=int(time()))
