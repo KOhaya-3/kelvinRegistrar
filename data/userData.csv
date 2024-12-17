@@ -1,6 +1,6 @@
 First Name,Last Name,Username,Password,Role,ID
 Kelvin,Ohaya,kelohaya,12122005,admin,1
-Dev,Eloper,u,p,admin,2
+Guest,User,u,p,admin,2
 Gorilla,Glue,gGlue,woodGlue,admin,3
 Brian,Dawkins,bDawkins,theBoom,instructor,4
 Byron,Gray,bGray,snakeOil,instructor,5
@@ -12,3 +12,5 @@ Patrick,Star,pStar,leedlee,student,10
 Nita,Bear,Ayaie,bruce,instructor,11
 SpongeBob,SquarePants,bubbleBlower,pineapple,student,12
 Leon,InTheLead,chameleon,notFai,student,13
+Mordecai,Jay,mJay,woooo,instructor,14
+Dev,Eloper,d,m,admin,15

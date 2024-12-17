@@ -1,4 +1,4 @@
-from bottle import Bottle, run, template, redirect, request  
+from bottle import Bottle, template, request  
 from middleware import *
 import pandas as pd 
 from time import time

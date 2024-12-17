@@ -14,11 +14,11 @@
             <form action="loginValidation" method="post">
                 <div>
                     <label for="username">Username</label>
-                    <input type="text" name="username" placeholder="Enter Username" required>
+                    <input type="text" name="username" placeholder="Enter Username ('u' for guest users)" required>
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Enter Password">
+                    <input type="password" name="password" placeholder="Enter Password ('p' for guest users)">
                 </div>            
                 %if invalidCredentials == "True":
                     <div class="error">*Username or password is invalid.</div>
