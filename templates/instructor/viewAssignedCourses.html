@@ -5,25 +5,25 @@
         <link rel="stylesheet" href="/static/showThings.css?v={{time}}">
     </head>
     <body>
-        <div class="container">
-            %if assignedCourseDict != {}:
-            <h4>Assigned Courses</h4>
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Number/ID</th>
-                </tr>
-                %for assignedCourse in assignedCourseDict:
-                <tr>
-                    <th>{{assignedCourse["Title"]}}</th>
-                    <th>{{assignedCourse["CourseID"]}}</th>
-                </tr>
-                %end
-            </table>
-            <div class="button-container"><div><a href="/instructor">Back to dashboard</a></div></div>
+            %if len(assignedCourseDict) > 0:
+                <div class="container">
+                <h4>Assigned Courses</h4>
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Number/ID</th>
+                    </tr>
+                    %for assignedCourse in assignedCourseDict:
+                    <tr>
+                        <th>{{assignedCourse["Title"]}}</th>
+                        <th>{{assignedCourse["CourseID"]}}</th>
+                    </tr>
+                    %end
+                </table>
+                <div class="button-container"><div><a href="/instructor">Back to dashboard</a></div></div>
             %else:
                 <div class="no-content">
-                    <p>*Instructor isn't assigned to any courses*</p>
+                    <h3>*You aren't assigned to any courses*</h3>
                     <img src="/static/images/unemployed.png" alt="Unemployed Bloke">
                     <div class="button-container"><div><a href="/instructor">Back to dashboard</a></div></div>
                 </div>

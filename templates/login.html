@@ -3,7 +3,6 @@
     <head>
         <title>Login</title>
         <link rel="stylesheet" href="../static/login.css?v={{time}}">
-        <link rel="stylesheet" href="../static/global.css?v={{time}}">
     </head>
     <body>
         <header class="login-header">
@@ -22,7 +21,7 @@
                     <input type="password" name="password" placeholder="Enter Password">
                 </div>            
                 %if invalidCredentials == "True":
-                    <div id="error">*Username or password is invalid.</div>
+                    <div class="error">*Username or password is invalid.</div>
                 %end
                 <div class="login-form-buttons">
                     <button type="submit">Login</button>

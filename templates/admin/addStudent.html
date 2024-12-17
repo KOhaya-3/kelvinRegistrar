@@ -9,7 +9,7 @@
         <h1>Add A Student</h1>
         <form action="addStudentValidation" method="post">
             <div>
-                <label for="firstName">Student's First Name:</label>
+                <label for="firstName">Student's First Name</label>
                 <input id="firstName" type="text" name="firstName" placeholder="Enter First Name" required>
                 % if invalidFirstName == "True":
                 <div class="error">First name can't have spaces and can only contain letters.</div>

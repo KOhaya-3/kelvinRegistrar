@@ -134,3 +134,13 @@
 }
 
 
+
+
+.error {
+    color: var(--error) !important;
+    font-size: 1rem;
+    /* border: 1px solid red; */
+    padding: 0 !important;
+    text-align: center;
+    
+}
