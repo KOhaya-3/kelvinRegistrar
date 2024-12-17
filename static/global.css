@@ -1,0 +1,24 @@
+/* --------Global Properties-------- */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+:root {
+    --primary:#990000;
+    --header: 42px;
+    --error:#CF6679;
+    --secondary:#243142;
+    --font-color:#EDEBEB;
+    --sub-background: rgba(61, 71, 85,0.5);
+
+}
+
+
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--secondary);
+    font-family: "Lato", "sans-serif";
+}
+
+

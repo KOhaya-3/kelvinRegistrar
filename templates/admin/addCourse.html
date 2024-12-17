@@ -2,48 +2,59 @@
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Add a course</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-        <style>
-            .form-error {
-                color: red;
-                font-size: 0.9rem;
-                margin-top: 5px;
-            }
-
-        </style>
+        <link rel="stylesheet" href="/static/addUser.css?v={{time}}">
     </head>
     <body>
-        %if instructorUsernamesExist:
-        <form action="addCourseValidation" method="post">
-            <div>
-                <label for="title">Course Title:</label>
-                <input id="firstName" type="text" name="title" required>
-                %if titleAlreadyExists=="True":
-                <div class="form-error">*Title already exists</div>
+        %if instructorsExist:
+        <div class="container">
+            <h1>Add A Course</h1>
+            <form action="addCourseValidation" method="post">  
+                <select name="instructorID" style="font-size: 1rem;"  required>
+                    <option value="" style="color: #999;">Course Instructor</option>
+                    %for instructor in instructorDict:
+                    <option value="{{instructor['ID']}}">{{instructor["First Name"]}} {{instructor["Last Name"]}}</option>
+                    %end
+                </select>
+                
+                <select name="assistantID" style="font-size: 1rem;">
+                    <option value="" style="color: #999;">Course Assistant (Optional)</option>
+                    %for assistant in assistantDict:
+                    <option value="{{assistant['ID']}}">{{assistant["First Name"]}} {{assistant["Last Name"]}}</option>
+                    %end
+                </select>
+
+                <div>
+                    <label for="title">Course Title</label>
+                    <input id="firstName" type="text" name="title" placeholder="Enter Title" required>
+                    %if titleAlreadyExists=="True":
+                    <div class="error">*Title already exists</div>
+                    %end
+                </div>
+
+                <div>
+                    <label for="number">Course Number</label>
+                    <input type="number" name="courseID" min="100" max="999" placeholder="Enter Course Number/ID" required> 
+                    %if numberAlreadyExists=="True":
+                    <div class="error">*Number belongs to another course</div> 
+                    %end      
+                </div> 
+
+                <div class="button-container">
+                    <div><input type="submit" value="Add Course"></div>
+                    <div><a href="/admin" >Back To Dashboard</a></div>
+                </div>
+            </form>
+                %if success == "True":
+                <p>Course Successfully Added!</p>
                 %end
-            </div>
-            <div>
-                <label for="number">Course Number:</label>
-                <input type="number" name="number" min="100" max="999" required> 
-                %if numberAlreadyExists=="True":
-                <div class="form-error">*Number belongs to another course</div> 
-                %end      
-            </div>
-                <h4>Pick the instructor/s for this course:</h4>
-                %for instructor in instructor_dict:
-                <input type="radio" name="instructorUsername" id=""value="{{instructor['Username']}}"> {{instructor["Position"][0].upper() + instructor["Position"][1:]}} {{instructor["First Name"]}} {{instructor["Last Name"]}} (Username: {{instructor["Username"]}})<br>
-                %end
-            <br>
-            <input type="submit" value="Add Course">
-        </form>
-        %else:
-        <p>*Can't create a course wthout instructors*</p>
-        %end
-        <a href="/admin">Back to dashboard</a>
+            %else:
+            <div class="no-instructors">
+                <h3>If you are seeing this page, you have no instructors yet :)</h3>
+                <img src="/static/images/noInstructors.png" alt="No Instructors Meme">
+                <a href="/admin">Back to dashboard</a> 
+            </div>             
+        </div>
+        %end 
     </body>
 </html>

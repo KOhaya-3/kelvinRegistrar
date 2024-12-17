@@ -3,24 +3,22 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Admin Dashboard</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            a{
-                color: #000;
-                text-decoration: none;
-            }
-        </style>
+        <link rel="stylesheet" href="/static/admin.css??v={{time}}">
+   
     </head>
     <body>
-        <h1>Welcome Back {{firstName}}!</h1>
-        <button><a href="/admin/addCourse">Add a course</a></button><br>
-        <button><a href="/admin/addInstructor">Add an instructor</a></button><br>
-        <button><a href="/admin/addStudent">Add a student</a></button><br>
-        <button><a href="/admin/showAllCourses">Show all courses</a></button><br>
-        <button><a href="/admin/showAllInstructors">Show all instructors</a></button><br>
-        <button><a href="/admin/showAllStudents">Show all students</a></button><br>
+        <h1 style="position: absolute; top:10%; left: 50%; transform: translate(-50%,-50%);">Welcome Back {{firstName}}!</h1>
+        <div class="container">
+            <a href="/admin/addCourse">Add a course</a>
+            <a href="/admin/addInstructor">Add an instructor</a>
+            <a href="/admin/addStudent">Add a student</a>
+            <a href="/admin/showAllCourses">Show all courses</a>
+            <a href="/admin/showAllInstructors">Show all instructors</a>
+            <a href="/admin/showAllStudents">Show all students</a>
+        </div>
         <form action="returnHome" method="post">
             <button type="submit">Logout</button>
         </form>

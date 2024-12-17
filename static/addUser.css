@@ -1,0 +1,203 @@
+/* --------Global Properties-------- */
+@import url("./global.css");
+
+
+body {
+    background: var(--secondary);
+    font-weight: bolder;
+    color: var(--font-color);
+}
+
+
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 150%;
+    margin-left: -25%;
+    /* border: 1px solid white; */
+    font-size: var(--header);
+    /* border: 1px solid red; */
+}
+
+
+
+.container {
+    /* border: 1px solid red; */
+    background: var(--sub-background);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 50px 40px 100px 40px;
+    border-radius: 30px;
+}
+
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.container form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.error {
+    color: var(--error) !important;
+    font-size: 0.7rem;
+    padding: 0;
+    
+}
+
+
+.container form input {
+    height: 40px;
+    padding-left: 10px;
+}
+
+.container form select {
+    height: 40px;
+    padding-left: 10px;
+}
+
+.container * {
+    /* border: 1px solid red; */
+}
+
+
+.enroll-form {
+    all: unset !important;
+}
+
+.enrollment-class {
+    /* border: 1px solid red; */
+    display: flex !important;
+    flex-direction: row !important;
+    padding-left: -40px;
+
+}
+
+.enrollment-class * {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.enrollment-class label {
+    margin-top: 7px;
+    position: absolute;
+    font-size: 1.5rem;
+    left: 17%;
+}
+
+
+.button-container {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    display: flex;
+    flex-direction: row !important; 
+    justify-content: space-between;
+    align-items: center;
+    width: 285px;
+    height: 50px;
+    font-size: 0.8rem;
+}
+
+.button-container * {
+    border: 2px solid green;
+}
+
+
+
+.button-container div {
+    background: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 0;
+}
+
+
+.button-container div a{   
+    all: unset;
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid white;
+}
+
+
+.button-container div input{  
+    all: unset;
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 10px;
+    border: 2px solid white;
+}
+
+
+.button-container div *:hover {
+    color: var(--primary);
+    background: var(--font-color);
+    cursor: pointer;
+}
+
+
+
+
+.no-content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 50%;
+    gap: 30px;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.no-content .button-container {
+    /* border: 1px solid red; */
+    position: absolute;
+    bottom: -25%;
+    right: 50% !important;
+    transform: translate(-50%,-50%) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-content img {
+    width: 40%;
+
+
+}
+

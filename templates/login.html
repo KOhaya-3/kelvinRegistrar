@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="../static/login.css?v={{time}}">
+        <link rel="stylesheet" href="../static/global.css?v={{time}}">
+    </head>
+    <body>
+        <header class="login-header">
+            <h1>Registrar</h1>
+        </header>
+
+        <div class="login-content">
+            <h2>Login</h2>
+            <form action="loginValidation" method="post">
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" placeholder="Enter Username" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Enter Password">
+                </div>            
+                %if invalidCredentials == "True":
+                    <div id="error">*Username or password is invalid.</div>
+                %end
+                <div class="login-form-buttons">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            %end 
+        </div>
+    </body>
+</html>

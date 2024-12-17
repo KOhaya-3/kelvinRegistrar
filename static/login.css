@@ -1,0 +1,159 @@
+/* --------Global Properties-------- */
+@import url("./global.css");
+
+
+:root {
+    --sub-background: rgba(61, 71, 85,0.5);
+}
+
+* {
+    /* border: 1px solid red; */
+}
+
+
+/* Toggle for the light and dark mode */
+.toggle {
+    background: var(--secondary);
+    width: 60px;
+    height: 30px;
+    border-radius: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle::before {
+    content:"";
+    width: 22px;
+    height:22px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 25px;
+    right: 45px;
+    transition: transform 0.3s;
+}
+
+
+
+
+
+/* --------Header-------- */
+.login-header {
+    /* border: 1px solid yellow; */
+    position: absolute;
+    background-color: var(--primary);
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+.login-header h1 {
+    background-color: inherit;
+    color: #EDEBEB;
+    padding-left: 20px;
+}
+
+
+
+
+/* --------Styling for the container of the login form-------- */
+.login-content {
+    /* border: 1px solid red; */
+    border-radius: 30px;
+    background-color: var(--sub-background);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    padding: 40px 60px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+
+}
+
+.login-content * {
+    /* border: 1px solid red; */
+}
+
+/* --------Header styling------- */
+.login-content h2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    font-size: var(--header);
+    color: var(--font-color);
+    
+}
+
+/* --------form styling-------- */
+.login-content form {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-content div {
+    width: 100%;
+    /* border: 1px solid red; */
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 0;
+}
+
+
+
+.login-content div label {
+    padding-bottom: 10px;
+
+}
+
+.login-content div input {
+    height: 40px;
+    padding-left: 10px;
+}
+
+
+
+.login-form-buttons {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid red; */
+    padding: 0;
+    margin: 0;
+    text-align: center;
+
+}
+
+.login-form-buttons button{
+    color: var(--font-color);
+    all: unset;
+    background-color: var(--primary);
+    padding: 12px 25px;
+    border: 2px solid white;
+    color: var(--font-color);
+    font-size: medium;
+
+}
+
+
+.login-form-buttons button:hover{
+    color: var(--primary);
+    background-color: var(--font-color);
+}
+
+

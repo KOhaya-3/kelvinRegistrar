@@ -1,68 +1,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Show All Courses</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-        table {
-            width: 25%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        thead th {
-            background-color: #f2f2f2;
-            color: #333;
-            font-weight: bold;
-            padding: 10px;
-            border: 1px solid #ddd;
-            
-        }
-
-        tbody td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: #fff;
-        }
-
-        table {
-            border: 1px solid #ccc;
-        }
-        </style>
+        <link rel="stylesheet" href="/static/showThings.css?v={{time}}">
     </head>
     <body>
-        %if coursesExist:
-            <h4>Here some info on all the existing courses:</h4>
+        <div class="container">
+            %if coursesExist:
+            <h1>All Courses</h1>
             <table>
                 <tr>
                     <th>Title</th>
                     <th>Number</th>
-                    <th>Instructor's Username</th>
+                    <th>Professor</th>
+                    <th>Assistant</th>
                 </tr>
             
-            %for course in course_dict:
+            %for course in courseDict:
                 <tr>
                     <th>{{course["Title"]}}</th>
-                    <th>{{course["Number"]}}</th>
-                    <th>{{course["Instructor"]}}</th>
+                    <th>{{course["CourseID"]}}</th>
+                    <th>{{course["First Name_x"]}} {{course["Last Name_x"]}}</th>
+                    <th>{{course["First Name_y"]}} {{course["Last Name_y"]}}</th>
                 </tr>
             %end
             </table>
-        %else:
-            <p>*No courses yet*</p>
-        %end
-        <a href="/admin">Back to dashboard</a>
+            <div class="button-container"><div><a href="/admin">Back to dashboard</a></div></div>
+            %else:
+                <div class="no-content">
+                    <h3>There Are No Courses Currently</h3>
+                    <img src="/static/images/confusion.png" alt="Man Looking Confused">
+                    <div class="button-container"><div><a href="/admin">Back to dashboard</a></div></div>
+                </div>
+            %end
+        </div> 
     </body>
 </html>

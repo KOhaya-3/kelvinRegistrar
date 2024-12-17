@@ -1,70 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Show All Instructors</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-        table {
-            width: 25%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        thead th {
-            background-color: #f2f2f2;
-            color: #333;
-            font-weight: bold;
-            padding: 10px;
-            border: 1px solid #ddd;
-            
-        }
-
-        tbody td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: #fff;
-        }
-
-        table {
-            border: 1px solid #ccc;
-        }
-        </style>
+        <link rel="stylesheet" href="/static/showThings.css?v={{time}}">
     </head>
     <body>
-        %if instructorsExist:
-            <h4>Here some info on all the existing courses:</h4>
+        <div class="container">
+            %if instructorsExist:
+            <h1>All Instrucotrs</h1>
             <table>
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
                     <th>Password</th>
+                    <th>Role</th>
+                    <th>Position</th>
+                    <th>ID</th>
                 </tr>
             
-            %for instructor in instructor_dict:
-                <tr>
-                    <th>{{instructor["First Name"]}}</th>
-                    <th>{{instructor["Last Name"]}}</th>
-                    <th>{{instructor["Username"]}}</th>
-                    <th>{{instructor["Password"]}}</th>
-                </tr>
-            %end
+                %for instructor in instructorDict:
+                    <tr>
+                        <th>{{instructor["First Name"]}}</th>
+                        <th>{{instructor["Last Name"]}}</th>
+                        <th>{{instructor["Username"]}}</th>
+                        <th>{{instructor["Password"]}}</th>
+                        <th>{{instructor["Role"]}}</th>
+                        <th>{{instructor["Position"]}}</th>
+                        <th>{{instructor["ID"]}}</th>
+                    </tr>
+                %end
             </table>
-        %else:
-            <p>*No instructors yet*</p>
-        %end
-        <a href="/admin">Back to dashboard</a>
+            <div class="button-container"><div><a href="/admin">Back To Dashboard</a></div></div>
+            %else:
+            <div class="no-content">
+                <h3>There are no instructors currently</h3>
+                <img src="/static/images/missingTeacher.png" alt="Picture of a classroom with a hollowed out teacher">
+                <div class="button-container"><div><a href="/admin">Back To Dashboard</a></div></div>
+            </div>
+            %end  
+        </div>
     </body>
 </html>

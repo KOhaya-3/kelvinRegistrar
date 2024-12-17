@@ -1,6 +1,7 @@
 from bottle import Bottle, run, template, redirect, request  
 from middleware import *
 import pandas as pd 
+from time import time
 import os
 
 
@@ -16,7 +17,7 @@ def instructor():
    firstName = session.get("firstName") 
    position = session.get("position")
 
-   return template("templates/instructor/instructor", firstName=firstName, position=position)
+   return template("templates/instructor/instructor", firstName=firstName, position=position, time=int(time()))
 
 
 
@@ -29,19 +30,19 @@ def instructor():
 @requiresLogin
 def viewAssignedCourses():   
   session = request.environ.get("beaker.session")
-  username = session.get("username")
+  iD = session.get("ID")
 
   if os.path.exists("data/courseData.csv"):
     courseData = pd.read_csv("data/courseData.csv")
-    hasCourses = courseData["Instructor"].isin([username]).any()
+    hasCourses = courseData["InstructorID"].isin([iD]).any()
 
   else:
     hasCourses = False
+    
 
   if hasCourses:
-    assignedCourseDict = courseData[courseData["Instructor"] == username]
-    assignedCourseDict = assignedCourseDict.to_dict("records")
+    assignedCourseDict = courseData[courseData["InstructorID"] == iD].to_dict("records")
   else:
     assignedCourseDict = []
 
-  return template("templates/instructor/viewAssignedCourses", assignedCourseDict=assignedCourseDict, hasCourses=hasCourses, username=username)
+  return template("templates/instructor/viewAssignedCourses", assignedCourseDict=assignedCourseDict, time=int(time()))

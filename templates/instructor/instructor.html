@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            a{
-                color: #000;
-                text-decoration: none;
-            }
-        </style>
+        <title>Instructor Dashboard</title>
+        <link rel="stylesheet" href="/static/instructorStudent.css?v={{time}}">
     </head>
     <body>
-        <h1>Welcome Back {{position[0].upper()}}{{position[1:]}} {{firstName}}!</h1>
-        <button><a href="/instructor/viewAssignedCourses">View all Assigned Courses</a></button><br>
-        <form action="returnHome" method="post">
-            <button type="submit">Logout</button>
-        </form>
+        <div class="container">
+            <h1>Welcome Back {{firstName}}!</h1>
+            <div>  
+                <a class="instructor-link" href="/instructor/viewAssignedCourses">View all Assigned Courses</a>
+            </div>
+            <form action="returnHome" method="post"><button type="submit">Logout</button></form>
+        </div>
     </body>
 </html>

@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <title>Enroll In A Course</title>
+        <link rel="stylesheet" href="/static/addUser.css?v={{time}}">
     </head>
     <body>
-        %if coursesExist and enrollmentDict:
-            <h4>Here are all the classes available:</h4>
-            <form action="enrollInACourseProcessor" method="post">
+        %if enrollmentDict:
+        <div class="container">
+            <h1>Enroll In A Course</h1>
+            <form class="enroll-form" action="enrollInACourseProcessor" method="post">
                 %for course in enrollmentDict:
-                    <input type="checkbox" name="enrollmentList[]" id="" value="{{course['Number']}}">{{course["Title"]}} {{course["Number"]}} (Teacher: {{course["Instructor First Name"]}} {{course["Instructor Last Name"]}})<br>
+                <div class="enrollment-class">
+                    <input type="checkbox" name="enrollmentList[]" id="" value="{{course['CourseID']}}"><label for="enrollmentList[]">{{course["Title"]}} {{course["CourseID"]}}</label><br>
+                </div>
                 %end
-                <br>
-                <button type="submit">Enroll</button>
-            </form>  
+
+                %if success == "True":
+                <p>Courses Added Successfully!</p>
+                %end
+                <div class="button-container">
+                    <div><input type="submit" value="Enroll"></div>
+                    <div><a href="/student">Back to dashboard</a></div>
+                </div>
+            </form> 
+        </div> 
         %else:
-            <p>*If you are seeing this page, you have either enrolled in all available courses, or there are no courses to enroll in*</p>
-        %end
-        <a href="/student">Back to dashboard</a>
+            <div class="no-content">
+                <p>*If you are seeing this page, you have either enrolled in all available courses, or there are no courses to enroll in (you nerd)*</p>
+                <img src="/static/images/nerd.png" alt="Nerdy Guy">
+                <div class="button-container"><div><a href="/student">Back to dashboard</a></div></div>
+            </div>
+        %end          
     </body>
 </html>

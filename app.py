@@ -1,10 +1,12 @@
-from bottle import Bottle, run, template, redirect, request  
+from bottle import Bottle, run, template, redirect, request, static_file
 from admin import adminApp
 from instructor import instructorApp
 from student import studentApp
 from middleware import *
 import pandas as pd 
-import os
+from time import time
+from bottle import template
+
 
 
 app = Bottle()  
@@ -14,180 +16,58 @@ app = Bottle()
 middlewareApp = createSessionMiddleware(app) 
 
 
-  
-#--------Home Page Route-------- 
+#--------Handling static pages (stylesheets)--------
+@app.route("/static/<filename:path>")
+def serve_static(filename):
+   response = static_file(filename, root='./static')
+   response.set_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+   response.set_header('Pragma', 'no-cache')
+   response.set_header('Expires', '0')
+   return static_file(filename, root="./static")
+
+
+
+
+
+#--------Home Login Page Route and Validation Handling-------- 
 @app.route('/')  
-def index():  
-   session = request.environ.get("beaker.session")
-    
-   if session and 'authenticated' in session:
-        session.clear()  # Clear the session data
-        session.save()   # Save the cleared session
-    
-   return template("templates/index")
+def index(): 
+   session = request.environ.get("beaker.session") 
+   session.delete()
+   invalidCredentials = request.query.get("invalidCredentials")  
+   return template("templates/login", invalidCredentials = invalidCredentials, attempts = 5, time=int(time()))
 
 
 
-
-
-
-
-
-#--------Admin Login Route and Post Validation Handling--------
-@app.route('/adminLogin')  
-def admins():  
-   session = request.environ.get('beaker.session')  
-   attempts = session.get('attempts', 5)  # default value is 5  
-   invalidCredentials = request.query.invalidCredentials == "True"   
-   return template("templates/admin/adminLogin", invalidCredentials=invalidCredentials, attempts=attempts)  
-
-
-@app.post("/adminLoginValidation")  
+@app.post("/loginValidation")  
 def validateUser():  
-   adminData = pd.read_csv("data/adminData.csv")
+   userData = pd.read_csv("data/userData.csv")
    
    session = request.environ.get('beaker.session')
-   session['authenticated'] = False  
    username = request.forms.get("username")  
    password = request.forms.get("password")  
 
-   match = adminData[(adminData["Username"] == username) & (adminData["Password"] == password)]
-  
-   attempts = session.get('attempts', 5)  
-  
-   if match.empty:  
-      if attempts > 1:
-         attempts -= 1  
-         session['attempts'] = attempts  
-         session.save()  
-         return redirect(f"/adminLogin?invalidCredentials=True&loginError=*Invalid+Username+or+password.+Please+try+again.")  
-      else:
-         session.pop("attempts")
-         return redirect("/")
-    
-   session['authenticated'] = True  
-   session["firstName"] = match["First Name"].values[0] 
-   session.save()  
-   return redirect(f"/admin")  
-
-  
-
-
-
-
-
-
-
-#--------Instructor Login Route and Post Validation--------
-@app.route("/instructorLogin")
-def instructorLogin():
-
-   instructorsExist = os.path.exists("data/instructorData.csv")
-
-   session = request.environ.get('beaker.session')  
-   attempts = session.get('attempts', 5)  # default value is 5  
-   invalidCredentials = request.query.invalidCredentials == "True"
-
-   return template("templates/instructor/instructorLogin", instructorsExist=instructorsExist, invalidCredentials=invalidCredentials,attempts=attempts)
-
-@app.post("/instructorLoginValidation")
-def validateInstructor():
-   instructorData = pd.read_csv("data/instructorData.csv")
-
-
-   session = request.environ.get('beaker.session')
-   session['authenticated'] = False  
-   username = request.forms.get("username")  
-   password = request.forms.get("password")  
-
+   match = userData[(userData["Username"] == username) & (userData["Password"] == password)]
    
-   match = instructorData[(instructorData["Username"] == username) & (instructorData["Password"] == password)]
-  
-   attempts = session.get('attempts', 5)  
-  
-   if match.empty:  
-      if attempts > 1:
-         attempts -= 1  
-         session['attempts'] = attempts  
-         session.save()  
-         return redirect(f"/instructorLogin?invalidCredentials={True}")  
-      else:
-         session.pop("attempts")
-         return redirect("/")
-    
+   if match.empty:   
+         return redirect(f"/?invalidCredentials=True")  
+
+   role = match["Role"].values[0] 
    session['authenticated'] = True  
    session["firstName"] = match["First Name"].values[0] 
-   session["username"] = match["Username"].values[0]
-   session["position"] = match["Position"].values[0]
-   session.save()  
-   return redirect(f"/instructor")
-
-
-
-
-
-
-
-
-#--------Instructor Login Route and Post Validation--------
-@app.route("/studentLogin")
-def studentLogin():
-
-   studentsExist = os.path.exists("data/studentData.csv")
-
-   session = request.environ.get('beaker.session')  
-   attempts = session.get('attempts', 5)  # default value is 5  
-   invalidCredentials = request.query.invalidCredentials == "True"
-
-   return template("templates/student/studentLogin", studentsExist=studentsExist, invalidCredentials=invalidCredentials,attempts=attempts)
-
-
-@app.post("/studentLoginValidation")
-def validateStudent():
-   studentData = pd.read_csv("data/studentData.csv")
-
-
-   session = request.environ.get('beaker.session')
-   session['authenticated'] = False  
-   username = request.forms.get("username")  
-   password = request.forms.get("password")  
-
+   session["ID"] = match["ID"].values[0]
+   session.save()
    
-   match = studentData[(studentData["Username"] == username) & (studentData["Password"] == password)]
-  
-   attempts = session.get('attempts', 5)  
-  
-   if match.empty:  
-      if attempts > 1:
-         attempts -= 1  
-         session['attempts'] = attempts  
-         session.save()  
-         return redirect(f"/studentLogin?invalidCredentials={True}")  
-      else:
-         session.pop("attempts")
-         return redirect("/")
-    
-   session['authenticated'] = True  
-   session["firstName"] = match["First Name"].values[0] 
-   session["lastName"] = match["Last Name"].values[0]
-   session["username"] = match["Username"].values[0]
-   session.save()  
-   return redirect("/student") 
+   if role  == "admin":
+      return redirect("/admin")  
+   elif role  == "student":
+      return redirect("/student")
+   elif role  == "instructor":
+      return redirect("/instructor")
 
-
-
-
-
-
-
-
-
-
-#--------Handling for when the form action="returnHome" (if the user wants to go the main screen)--------
-@app.post("/returnHome")  
-def returnHome():  
-   redirect("/") 
-
+@app.post("/returnHome")
+def returnHome():
+   return redirect("/")
 
 
 
@@ -201,5 +81,5 @@ app.mount("/student", studentApp)
 # Run the Bottle server
 application = middlewareApp
 
-# if __name__ == "__main__":
-#    run(middlewareApp, host='localhost', port=8080, reloader=True)
+if __name__ == "__main__":
+   run(middlewareApp, host='localhost', port=8080, reloader=True, debug=True)

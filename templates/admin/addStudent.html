@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Add a Student</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .form-error {
-            color: red;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/static/addUser.css?v={{time}}">
 </head>
 <body>
-    <form action="addStudentValidation" method="post">
-        <div>
-            <label for="firstName">Student's First Name:</label>
-            <input id="firstName" type="text" name="firstName" required>
-            % if invalidFirstName == "True":
-            <div class="form-error">First name can't have spaces and can only contain letters.</div>
-            % end
-        </div>
-
-        <div>
-            <label for="lastName">Student's Last Name:</label>
-            <input id="lastName" type="text" name="lastName" required>
-            % if invalidLastName == "True":
-            <div class="form-error">Last name can't have spaces and can only contain letters.</div>
-            % end
-        </div>
-
-        <div>
-            <label for="username">Student's Username:</label>
-            <input id="username" type="text" name="username" required>
-            % if invalidUsername == "True":
-            <div class="form-error">Username already exists.</div>
-            % end
-        </div>
-
-        <div>
-            <label for="password">Student's Password:</label>
-            <input id="password" type="password" name="password" required>
-        </div>
-        <br><br>
-        <input type="submit" value="Add Student">
-    </form>
-    <a href="/admin">Back to dashboard</a>
+    <div class="container">
+        <h1>Add A Student</h1>
+        <form action="addStudentValidation" method="post">
+            <div>
+                <label for="firstName">Student's First Name:</label>
+                <input id="firstName" type="text" name="firstName" placeholder="Enter First Name" required>
+                % if invalidFirstName == "True":
+                <div class="error">First name can't have spaces and can only contain letters.</div>
+                % end
+            </div>
+    
+            <div>
+                <label for="lastName">Student's Last Name</label>
+                <input id="lastName" type="text" name="lastName" placeholder="Enter Last Name" required>
+                % if invalidLastName == "True":
+                <div class="error">Last name can't have spaces and can only contain letters.</div>
+                % end
+            </div>
+    
+            <div>
+                <label for="username">Student's Username</label>
+                <input id="username" type="text" name="username" placeholder="Enter Username" autocomplete="new-password" required>
+                % if invalidUsername == "True":
+                <div class="error">Username already exists.</div>
+                % end
+            </div>
+    
+            <div>
+                <label for="password">Student's Password</label>
+                <input id="password" type="password" name="password" placeholder="Enter Password" autocomplete="new-password" required>
+            </div>
+            %if success=="True":
+            <p>Student Successfully Added!</p>
+            %end
+            <div class="button-container">
+                <div><input type="submit" value="Add Student"></div>
+                <div><a href="/admin">Back to dashboard</a></div>
+            </div>
+        </form>
+    </div> 
 </body>
 </html>

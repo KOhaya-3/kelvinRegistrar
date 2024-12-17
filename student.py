@@ -1,6 +1,7 @@
 from bottle import Bottle, template, request  
 from middleware import *
 import pandas as pd 
+from time import time
 import os
 
 #start the studentApp
@@ -12,7 +13,7 @@ studentApp = Bottle()
 def student():
     session = request.environ.get("beaker.session")
     firstName = session.get("firstName")
-    return template("templates/student/student", firstName=firstName)
+    return template("templates/student/student", firstName=firstName, time=int(time()))
 
 
 
@@ -25,25 +26,18 @@ def student():
 @requiresLogin
 def viewEnrolledCourses():
     session = request.environ.get("beaker.session")
-    username = session.get("username")
-    hasCourses = None
-    enrolledCourseDict = []
+    iD = session.get("ID")
 
-    if os.path.exists("data/enrollment.csv"):
-        enrollmentData = pd.read_csv("data/enrollment.csv", dtype=str)
-        enrollmentData = enrollmentData.fillna("")
-
-        filteredCourses = enrollmentData[enrollmentData["Student Usernames"].str.contains(rf"\b{username}\b")]
-        hasCourses = len(filteredCourses) > 0
-
-        if hasCourses:
-            enrolledCourseDict = filteredCourses.to_dict("records")
-
+    if os.path.exists("data/courseData.csv"):
+        courseData = pd.read_csv("data/courseData.csv", dtype=str).fillna("")
+        filteredCourses = courseData[courseData["StudentIDs"].str.contains(f"{iD}")].to_dict("records")
+         
     else:
-        hasCourses = False
+        filteredCourses = {}
     
+    print(filteredCourses)
 
-    return template("templates/student/viewEnrolledCourses", hasCourses=hasCourses, enrolledCourseDict=enrolledCourseDict)
+    return template("templates/student/viewEnrolledCourses", enrolledCourseDict=filteredCourses,time=int(time()))
 
 
 
@@ -55,76 +49,51 @@ def viewEnrolledCourses():
 @studentApp.route("/enrollInACourse")
 @requiresLogin
 def enrollInACourse():
-    coursesExist = os.path.exists("data/enrollment.csv")
+    coursesExist = os.path.exists("data/courseData.csv")
     session = request.environ.get("beaker.session")
-    username = session.get("username")
+    success = request.query.get("success")
+    iD = session.get("ID")
 
     if coursesExist:
-        enrollmentDict = pd.read_csv("data/enrollment.csv", dtype=str)
-        enrollmentDict = enrollmentDict.fillna("")
+        userData = pd.read_csv("data/userData.csv", dtype=str)
+        courseData = pd.read_csv("data/courseData.csv", dtype=str).fillna("")
+        courseData =  courseData[~courseData['StudentIDs'].str.contains(f"{iD}")]
+        courseInstructorDict = pd.merge(userData, courseData, left_on="ID", right_on="InstructorID")
+        courseDict = pd.merge(courseInstructorDict, userData, left_on="AssistantID", right_on="ID",how="left").fillna({"First Name_y": "N/A", "Last Name_y": ""})
+        courseDict.drop(["InstructorID", "AssistantID", "Username_x", "Username_y", "Password_x", "Password_y", "Role_x", "Role_y", "ID_x", "ID_y"], axis=1, inplace=True)
+        courseDict = courseDict.to_dict("records")
+       
+    else: courseData = {}
 
-        # Split the column values by the separator (e.g., ':')
-        enrollmentDict['Student Usernames'].apply(lambda x: x.split(';')).apply(lambda lst: username not in lst)
-        filteredData = enrollmentDict[enrollmentDict['Student Usernames'].apply(lambda x: username not in x.split(';'))].to_dict("records")
 
-
-    else: filteredData = []
-
-
-    return template("templates/student/enrollInACourse", coursesExist=coursesExist, enrollmentDict=filteredData)
+    return template("templates/student/enrollInACourse", enrollmentDict=courseDict, time=int(time()), success=success)
 
 
 @studentApp.post("/enrollInACourseProcessor")
 def processCourseEnrollment():
-    enrollmentData = pd.read_csv("data/enrollment.csv", dtype=str)
-    enrollmentData = enrollmentData.fillna("")
+    courseData = pd.read_csv("data/courseData.csv", dtype=str).fillna("")
+    desiredCourses = {}
     session = request.environ.get("beaker.session")
-    firstName = session.get("firstName")
-    lastName = session.get("lastName")
-    username = session.get("username")
+    iD = str(session.get("ID"))
+    selectedCourseIDs = request.forms.getlist("enrollmentList[]")
+
+    for courseID in selectedCourseIDs:
+        desiredCourses = courseData.loc[courseData["CourseID"] == str(courseID), "StudentIDs"].values[0]
+        # print(desiredCourses)
+        listOfEnrolledStudents = desiredCourses.split(';')
+        listOfEnrolledStudents.append(iD)  
+        enrolledStudentStr = ";".join(listOfEnrolledStudents[1:])
+        courseData.loc[courseData["CourseID"] == courseID, "StudentIDs"] = enrolledStudentStr
+        print(enrolledStudentStr)
+    courseData.to_csv("data/courseData.csv", index=False)
     
-    requestedClasses = request.forms.getlist("enrollmentList[]")
-
-    for course in requestedClasses:
-        # Update Student First Names column
-        currentFirstNames = enrollmentData.loc[enrollmentData["Number"] == course, "Student First Names"].values[0]
-
-        if currentFirstNames == "":
-            updatedFirstNames = firstName
-        else:
-            updatedFirstNames = f"{currentFirstNames};{firstName}"
-
-        enrollmentData.loc[enrollmentData["Number"] == course, "Student First Names"] = updatedFirstNames
-
-
-
-        # Update Student Last Names column
-        currentLastNames = enrollmentData.loc[enrollmentData["Number"] == course, "Student Last Names"].values[0]
-
-        if currentLastNames == "":
-            updatedLastNames = lastName
-        else:
-            updatedLastNames = f"{currentLastNames};{lastName}"
-
-        enrollmentData.loc[enrollmentData["Number"] == course, "Student Last Names"] = updatedLastNames
         
-
-        # Update Student Usernames column
-        currentUsernames = enrollmentData.loc[enrollmentData["Number"] == course, "Student Usernames"].values[0]
-
-        if currentUsernames == "":
-            updatedUsernames = username
-        else:
-            updatedUsernames = f"{currentUsernames};{username}"
+    """
+        find the course where the instructor ID matches the instuctorID from the form
         
-        enrollmentData.loc[enrollmentData["Number"] == course, "Student Usernames"] = updatedUsernames
+        take that row and split up its studentID list, add the new studentID, and join the list back up
+        """
 
-# Save the updated dataframe back to the CSV
-    enrollmentData.to_csv("data/enrollment.csv", index=False)
-
-    return template(f"""
-<p>All courses have been enrolled!</p>
-<a href="/student">Back to dashboard</a>
-""")
+    return redirect("/student/enrollInACourse?success=True")
 
 
